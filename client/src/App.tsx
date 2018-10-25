@@ -15,13 +15,17 @@ class App extends React.Component {
   };
 
   public componentDidMount() {
-    this.callApi()
+    this.callApi('/api/hello')
       .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+
+      this.callApi("/api/crawl")
+      .then(res => console.log("sent crawling request"))
       .catch(err => console.log(err));
   }
 
-  public callApi = async () => {
-    const response = await fetch('/api/hello');
+  public callApi = async (url: RequestInfo) => {
+    const response = await fetch(url);
     const body = await response.json();
 
     if (response.status !== 200) {
